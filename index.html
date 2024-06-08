@@ -2,13 +2,139 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>精神焦虑症的自救</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
+  <title>精神焦虑症的自救</title>
+  <style>
+    body {
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      padding-top: 1px;
+      background: #f1f3f4;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .center {
+      width: 90vw;
+      max-width: 600px;
+    }
+
+    h4 {
+      text-align: center;
+      letter-spacing: 2px;
+      color: #444;
+      font-weight: normal;
+      width: 90%;
+      margin: 0 auto;
+    }
+
+    audio {
+      display: block;
+      width: 95%;
+      height: 48px;
+      margin: 20px auto;
+      border-radius: 50px;
+      box-shadow: 1px 1px 2px #fff, -1px -1px 2px #ccc;
+    }
+
+    .items {
+      margin: 0px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      height: calc(100vh - 200px);
+      overflow-y: auto;
+    }
+
+    .btn {
+      background: #f1f3f4;
+      color: #444;
+      padding: 8px 5px;
+      border-radius: 5px;
+      box-shadow: 6px 6px 10px -1px rgba(0, 0, 0, 0.15),
+        -6px -6px 10px -1px rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(0, 0, 0, 0);
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .btn:hover,
+    .btn.active {
+      box-shadow: inset 4px 4px 6px -1px rgba(0, 0, 0, 0.2),
+        inset -4px -4px 6px -1px rgba(255, 255, 255, 0.7),
+        -0.5px -0.5px 0px rgba(255, 255, 255, 1),
+        0.5px 0.5px 0px rgba(0, 0, 0, 0.15),
+        0px 12px 10px -10px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      transform: translateY(0.1em);
+    }
+
+    button {
+      width: 100%;
+      margin: 7px 8px;
+      text-align: left;
+      line-height: 1.7;
+    }
+  </style>
 </head>
 
 <body>
-    精神焦虑症的自救
+  <div class="center">
+    <!-- 标题 -->
+    <h4>焦虑症的自救</h4>
+
+    <!-- 播放器 -->
+    <audio src="" controls></audio>
+
+    <!-- 选集 -->
+    <div class="items"></div>
+  </div>
+
+  <script>
+    const player = document.querySelector("audio");
+    const items = document.querySelector(".items");
+    let data = []
+
+    // 加载音频标题列表
+    fetch('list.json')
+      .then(response => response.json())
+      .then(res => {
+        data = res
+        genHtml()
+      })
+
+    function genHtml() {
+      // 构造选集按钮集合
+      let html = "";
+      for (let i = 0; i < data.length; i++) {
+        html += `<button class="btn">${data[i].slice(0, -4)}</button>`;
+      }
+
+      items.innerHTML = html
+
+      // 事件委托
+      items.addEventListener("click", (e) => {
+        let tag = e.target
+        if (tag.tagName === "BUTTON") {
+          document.querySelector("h4").innerHTML = tag.innerHTML;
+          items.childNodes.forEach(node => node.classList.remove('active'))
+          tag.classList.add('active')
+          player.src = `https://jasonbai008.github.io/selfhelp/mp3/${tag.innerHTML}.mp3`;
+          setTimeout(() => player.play(), 4000);
+        }
+      });
+    }
+
+  </script>
 </body>
 
 </html>
