@@ -128,7 +128,7 @@
           document.querySelector("h4").innerHTML = tag.innerHTML;
           items.childNodes.forEach(node => node.classList.remove('active'))
           tag.classList.add('active')
-          player.src = `https://jasonbai008.github.io/selfhelp/mp3/${tag.innerHTML}.mp3`;
+          player.src = `./mp3/${tag.innerHTML}.mp3`;
           setTimeout(() => player.play(), 4000);
         }
       });
