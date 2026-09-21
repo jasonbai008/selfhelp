@@ -138,8 +138,30 @@
       margin-bottom: 16px;
     }
 
-    .audio-head {
+    .audio-toolbar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        "title title"
+        "tabs mode";
       align-items: center;
+      column-gap: 16px;
+      row-gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .audio-toolbar h2 {
+      grid-area: title;
+    }
+
+    .audio-toolbar .tabs {
+      grid-area: tabs;
+      margin-bottom: 0;
+    }
+
+    .audio-toolbar .mode-btn {
+      grid-area: mode;
+      justify-self: end;
     }
 
     .mode-btn {
@@ -526,9 +548,10 @@
         align-items: flex-start;
       }
 
-      .audio-head {
-        flex-direction: row;
-        align-items: center;
+      .audio-toolbar {
+        grid-template-areas:
+          "title mode"
+          "tabs tabs";
       }
 
       .tabs {
@@ -575,17 +598,17 @@
     </section>
 
     <section class="section">
-      <div class="section-head audio-head">
+      <div class="audio-toolbar">
         <h2>有声书</h2>
+        <div class="tabs" role="tablist">
+          <button class="tab active" data-book="pathology" type="button">
+            病理分析卷 <span class="count" id="count-pathology"></span>
+          </button>
+          <button class="tab" data-book="talks" type="button">
+            演讲访谈卷 <span class="count" id="count-talks"></span>
+          </button>
+        </div>
         <button class="mode-btn" id="play-mode" type="button" aria-label="切换播放模式">单曲播放</button>
-      </div>
-      <div class="tabs" role="tablist">
-        <button class="tab active" data-book="pathology" type="button">
-          病理分析卷 <span class="count" id="count-pathology"></span>
-        </button>
-        <button class="tab" data-book="talks" type="button">
-          演讲访谈卷 <span class="count" id="count-talks"></span>
-        </button>
       </div>
       <div class="track-list" id="list-pathology"></div>
       <div class="track-list hidden" id="list-talks"></div>
