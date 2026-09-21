@@ -1,139 +1,600 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
   <title>精神焦虑症的自救</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap"
+    rel="stylesheet" />
   <style>
+    :root {
+      --paper: #f3eee4;
+      --paper-deep: #e8e0d0;
+      --card: #fffaf2;
+      --ink: #2b271f;
+      --muted: #746c5e;
+      --line: #ddd3c2;
+      --sage: #3e5c4e;
+      --sage-hover: #314a3e;
+      --sage-soft: #e4eee8;
+      --gold: #9a784c;
+      --gold-soft: #f3ead9;
+      --shadow: 0 12px 32px rgba(62, 50, 30, 0.08);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
     body {
-      width: 100vw;
-      height: 100vh;
       margin: 0;
       padding: 0;
-      overflow: hidden;
-      padding-top: 1px;
-      background: #f1f3f4;
-      box-sizing: border-box;
-      display: flex;
-      justify-content: center;
-      align-items: center;
     }
 
-    .center {
-      width: 90vw;
-      max-width: 600px;
+    body {
+      font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 480px at 10% -10%, #fff8ea 0%, transparent 60%),
+        radial-gradient(900px 420px at 100% 0%, #e7efe8 0%, transparent 55%),
+        var(--paper);
+      min-height: 100vh;
+      line-height: 1.6;
     }
 
-    h4 {
-      text-align: center;
-      letter-spacing: 2px;
-      color: #444;
-      font-weight: normal;
-      width: 90%;
-      margin: 0 auto;
-    }
-
-    audio {
-      display: block;
-      width: 95%;
-      height: 48px;
-      margin: 20px auto;
-      border-radius: 50px;
-      box-shadow: 1px 1px 2px #fff, -1px -1px 2px #ccc;
-    }
-
-    .items {
-      margin: 0px auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      align-content: flex-start;
-      height: calc(100vh - 200px);
-      overflow-y: auto;
-    }
-
-    .btn {
-      background: #f1f3f4;
-      color: #444;
-      padding: 8px 5px;
-      border-radius: 5px;
-      box-shadow: 6px 6px 10px -1px rgba(0, 0, 0, 0.15),
-        -6px -6px 10px -1px rgba(255, 255, 255, 0.7);
-      border: 1px solid rgba(0, 0, 0, 0);
-      cursor: pointer;
-      transition: transform 0.3s;
-    }
-
-    .btn:hover,
-    .btn.active {
-      box-shadow: inset 4px 4px 6px -1px rgba(0, 0, 0, 0.2),
-        inset -4px -4px 6px -1px rgba(255, 255, 255, 0.7),
-        -0.5px -0.5px 0px rgba(255, 255, 255, 1),
-        0.5px 0.5px 0px rgba(0, 0, 0, 0.15),
-        0px 12px 10px -10px rgba(0, 0, 0, 0.05);
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      transform: translateY(0.1em);
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
     button {
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .page {
+      width: min(1080px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 36px 0 140px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 168px 1fr;
+      gap: 36px;
+      align-items: center;
+      padding: 28px 32px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .portrait {
+      width: 168px;
+      height: 210px;
+      object-fit: cover;
+      border-radius: 8px 18px 8px 18px;
+      filter: sepia(0.18) contrast(1.05);
+      box-shadow: 8px 10px 0 var(--paper-deep);
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--gold);
+      font-size: 12px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: "Noto Serif SC", serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      line-height: 1.25;
+    }
+
+    .author {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .motto {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .motto span {
+      padding: 6px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--gold-soft);
+      color: #6d5534;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+    }
+
+    .section {
+      margin-top: 42px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      margin: 0;
+      font-family: "Noto Serif SC", serif;
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .pdf-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .pdf-card {
+      padding: 22px 20px 18px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .pdf-label {
+      color: var(--gold);
+      font-size: 12px;
+      letter-spacing: 0.16em;
+    }
+
+    .pdf-card h3 {
+      margin: 8px 0 6px;
+      font-family: "Noto Serif SC", serif;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .pdf-card p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .pdf-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 36px;
+      padding: 0 14px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      font-size: 13px;
+      font-weight: 500;
+      transition: 0.18s ease;
+    }
+
+    .btn-primary {
+      background: var(--sage);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--sage-hover);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border-color: var(--line);
+      color: var(--ink);
+    }
+
+    .btn-ghost:hover {
+      background: var(--gold-soft);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+      padding: 6px;
+      width: fit-content;
+      background: #efe8db;
+      border-radius: 14px;
+    }
+
+    .tab {
+      position: relative;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .tab.active {
+      background: var(--card);
+      color: var(--ink);
+      box-shadow: 0 4px 12px rgba(62, 50, 30, 0.08);
+    }
+
+    .tab .count {
+      margin-left: 6px;
+      color: var(--gold);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .track-list {
+      overflow: hidden;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .track {
+      display: grid;
+      grid-template-columns: 64px 1fr 40px;
+      align-items: center;
       width: 100%;
-      margin: 7px 8px;
+      padding: 14px 18px;
+      border: 0;
+      background: transparent;
       text-align: left;
-      line-height: 1.7;
+      color: inherit;
+      border-bottom: 1px solid #efe8db;
+    }
+
+    .track:last-child {
+      border-bottom: 0;
+    }
+
+    .track:hover {
+      background: #f8f3ea;
+    }
+
+    .track.active {
+      background: var(--sage-soft);
+    }
+
+    .track-index {
+      color: var(--gold);
+      font-family: "Noto Serif SC", serif;
+      font-size: 15px;
+      letter-spacing: 0.04em;
+    }
+
+    .track-title {
+      font-size: 15px;
+    }
+
+    .track-play {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--gold-soft);
+      color: var(--sage);
+      font-size: 11px;
+    }
+
+    .track.active .track-play {
+      background: var(--sage);
+      color: #fff;
+    }
+
+    .player {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      z-index: 20;
+      width: min(1080px, calc(100% - 24px));
+      transform: translateX(-50%);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px 20px;
+      align-items: center;
+      padding: 14px 18px 12px;
+      background: rgba(255, 250, 242, 0.92);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: 0 16px 40px rgba(43, 39, 31, 0.14);
+      backdrop-filter: blur(12px);
+    }
+
+    .now-label {
+      color: var(--gold);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+    }
+
+    .now-title {
+      margin-top: 2px;
+      font-family: "Noto Serif SC", serif;
+      font-size: 16px;
+    }
+
+    .now-title.is-idle {
+      color: var(--muted);
+      font-family: "Noto Sans SC", sans-serif;
+      font-size: 14px;
+    }
+
+    audio {
+      width: min(420px, 100%);
+      height: 36px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 820px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 24px 20px;
+      }
+
+      .portrait {
+        margin: 0 auto;
+      }
+
+      .motto {
+        justify-content: center;
+      }
+
+      .pdf-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .tabs {
+        width: 100%;
+      }
+
+      .tab {
+        flex: 1;
+      }
+
+      .player {
+        grid-template-columns: 1fr;
+        bottom: 10px;
+      }
+
+      audio {
+        width: 100%;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div class="center">
-    <!-- 标题 -->
-    <h4>焦虑症的自救</h4>
+  <div class="page">
+    <header class="hero">
+      <img class="portrait" src="./img/hero.jpg" alt="Claire Weekes" />
+      <div>
+        <p class="eyebrow">Claire Weekes</p>
+        <h1>精神焦虑症的自救</h1>
+        <p class="author">克莱尔 · 威克斯　有声书与电子书</p>
+        <div class="motto">
+          <span>面对</span>
+          <span>接受</span>
+          <span>飘然</span>
+          <span>等待</span>
+        </div>
+      </div>
+    </header>
 
-    <!-- 播放器 -->
-    <audio src="" controls></audio>
+    <section class="section">
+      <div class="section-head">
+        <h2>电子书</h2>
+      </div>
+      <div class="pdf-grid" id="pdf-grid"></div>
+    </section>
 
-    <!-- 选集 -->
-    <div class="items"></div>
+    <section class="section">
+      <div class="section-head">
+        <h2>有声书</h2>
+      </div>
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-book="pathology" type="button">
+          病理分析卷 <span class="count" id="count-pathology"></span>
+        </button>
+        <button class="tab" data-book="talks" type="button">
+          演讲访谈卷 <span class="count" id="count-talks"></span>
+        </button>
+      </div>
+      <div class="track-list" id="list-pathology"></div>
+      <div class="track-list hidden" id="list-talks"></div>
+    </section>
+  </div>
+
+  <div class="player">
+    <div>
+      <div class="now-label">正在收听</div>
+      <div class="now-title is-idle" id="now-title">选择一节开始播放</div>
+    </div>
+    <audio id="player" controls preload="none"></audio>
   </div>
 
   <script>
-    const player = document.querySelector("audio");
-    const items = document.querySelector(".items");
-    let data = []
+    const BOOKS = {
+      pathology: { dir: "mp3", listUrl: "./mp3/list.json", files: [] },
+      talks: { dir: "m4a", listUrl: "./m4a/list.json", files: [] }
+    };
 
-    // 加载音频标题列表
-    fetch('/mp3/list.json')
-      .then(response => response.json())
-      .then(res => {
-        data = res
-        genHtml()
-      })
-
-    function genHtml() {
-      // 构造选集按钮集合
-      let html = "";
-      for (let i = 0; i < data.length; i++) {
-        html += `<button class="btn">${data[i].slice(0, -4)}</button>`;
+    const PDFS = [
+      {
+        label: "VOLUME I",
+        title: "病理分析卷",
+        desc: "原理、症状与治疗方法",
+        file: "精神焦虑症的自救-病理分析卷.pdf"
+      },
+      {
+        label: "VOLUME II",
+        title: "演讲访谈卷",
+        desc: "访谈、电台与医院讲话",
+        file: "精神焦虑症的自救-演讲访谈卷.pdf"
+      },
+      {
+        label: "VOLUME III",
+        title: "三合一卷",
+        desc: "实战篇合集",
+        file: "精神焦虑症的自救-三合一卷.pdf"
       }
+    ];
 
-      items.innerHTML = html
+    const player = document.getElementById("player");
+    const nowTitle = document.getElementById("now-title");
+    let activeBook = "pathology";
+    let current = { book: null, index: -1 };
 
-      // 事件委托
-      items.addEventListener("click", (e) => {
-        let tag = e.target
-        if (tag.tagName === "BUTTON") {
-          document.querySelector("h4").innerHTML = tag.innerHTML;
-          items.childNodes.forEach(node => node.classList.remove('active'))
-          tag.classList.add('active')
-          player.src = `./mp3/${tag.innerHTML}.mp3`;
-          setTimeout(() => player.play(), 2000);
-        }
+    function displayTitle(filename) {
+      return filename
+        .replace(/\.(mp3|m4a)$/i, "")
+        .replace(/^\d+(?:-\d+)*\s+/, "");
+    }
+
+    function audioUrl(book, file) {
+      return `./${BOOKS[book].dir}/${encodeURIComponent(file)}`;
+    }
+
+    function renderPdfs() {
+      document.getElementById("pdf-grid").innerHTML = PDFS.map((item) => {
+        const href = `./pdf/${encodeURIComponent(item.file)}`;
+        return `
+          <article class="pdf-card">
+            <div class="pdf-label">${item.label}</div>
+            <h3>${item.title}</h3>
+            <p>${item.desc}</p>
+            <div class="pdf-actions">
+              <a class="btn btn-primary" href="${href}" target="_blank" rel="noopener">阅读</a>
+              <a class="btn btn-ghost" href="${href}" download="${item.file}">下载</a>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function renderTracks(book) {
+      const files = BOOKS[book].files;
+      document.getElementById(`count-${book}`).textContent = files.length;
+      document.getElementById(`list-${book}`).innerHTML = files.map((file, index) => `
+        <button class="track" type="button" data-book="${book}" data-index="${index}">
+          <span class="track-index">${String(index + 1).padStart(2, "0")}</span>
+            <span class="track-title">${displayTitle(file)}</span>
+          <span class="track-play">▶</span>
+        </button>
+      `).join("");
+    }
+
+    function updatePlayingState() {
+      document.querySelectorAll(".track").forEach((el) => {
+        const active = current.book === el.dataset.book && current.index === Number(el.dataset.index);
+        el.classList.toggle("active", active);
+        el.querySelector(".track-play").textContent = active && !player.paused ? "❚❚" : "▶";
       });
     }
 
+    function playTrack(book, index) {
+      const file = BOOKS[book].files[index];
+      if (!file) return;
+
+      const same = current.book === book && current.index === index;
+      if (same) {
+        if (player.paused) player.play();
+        else player.pause();
+        return;
+      }
+
+      current = { book, index };
+      nowTitle.textContent = displayTitle(file);
+      nowTitle.classList.remove("is-idle");
+      player.src = audioUrl(book, file);
+      player.play();
+      updatePlayingState();
+    }
+
+    function switchTab(book) {
+      activeBook = book;
+      document.querySelectorAll(".tab").forEach((tab) => {
+        tab.classList.toggle("active", tab.dataset.book === book);
+      });
+      document.getElementById("list-pathology").classList.toggle("hidden", book !== "pathology");
+      document.getElementById("list-talks").classList.toggle("hidden", book !== "talks");
+    }
+
+    document.querySelector(".tabs").addEventListener("click", (event) => {
+      const tab = event.target.closest(".tab");
+      if (tab) switchTab(tab.dataset.book);
+    });
+
+    document.querySelector(".page").addEventListener("click", (event) => {
+      const track = event.target.closest(".track");
+      if (!track) return;
+      playTrack(track.dataset.book, Number(track.dataset.index));
+    });
+
+    player.addEventListener("play", updatePlayingState);
+    player.addEventListener("pause", updatePlayingState);
+    player.addEventListener("ended", () => {
+      const next = current.index + 1;
+      if (current.book && next < BOOKS[current.book].files.length) {
+        playTrack(current.book, next);
+      } else {
+        updatePlayingState();
+      }
+    });
+
+    renderPdfs();
+
+    Promise.all(
+      Object.entries(BOOKS).map(([, book]) =>
+        fetch(book.listUrl)
+          .then((res) => res.json())
+          .then((files) => {
+            book.files = files;
+          })
+      )
+    ).then(() => {
+      renderTracks("pathology");
+      renderTracks("talks");
+    });
   </script>
 </body>
 
