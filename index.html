@@ -138,6 +138,31 @@
       margin-bottom: 16px;
     }
 
+    .audio-head {
+      align-items: center;
+    }
+
+    .mode-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 32px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--card);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: 0.18s ease;
+    }
+
+    .mode-btn:hover {
+      background: var(--gold-soft);
+      color: var(--ink);
+    }
+
     h2 {
       margin: 0;
       font-family: "Noto Serif SC", serif;
@@ -262,6 +287,7 @@
     }
 
     .track {
+      position: relative;
       display: grid;
       grid-template-columns: 40px 1fr 40px;
       align-items: center;
@@ -272,6 +298,7 @@
       text-align: left;
       color: inherit;
       border-bottom: 1px solid #efe8db;
+      overflow: hidden;
     }
 
     .track:last-child {
@@ -284,6 +311,22 @@
 
     .track.active {
       background: var(--sage-soft);
+    }
+
+    .track.active::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: var(--progress, 0%);
+      background: #c5d6cc;
+      pointer-events: none;
+    }
+
+    .track > * {
+      position: relative;
+      z-index: 1;
     }
 
     .track-index {
@@ -332,16 +375,30 @@
       backdrop-filter: blur(12px);
     }
 
+    .now {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-width: 0;
+    }
+
     .now-label {
+      flex-shrink: 0;
       color: var(--gold);
       font-size: 11px;
       letter-spacing: 0.18em;
     }
 
     .now-title {
-      margin-top: 2px;
+      min-width: 0;
+      flex: 1;
+      text-align: right;
       font-family: "Noto Serif SC", serif;
       font-size: 16px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .now-title.is-idle {
@@ -381,6 +438,11 @@
       .section-head {
         flex-direction: column;
         align-items: flex-start;
+      }
+
+      .audio-head {
+        flex-direction: row;
+        align-items: center;
       }
 
       .tabs {
@@ -432,8 +494,9 @@
     </section>
 
     <section class="section">
-      <div class="section-head">
+      <div class="section-head audio-head">
         <h2>有声书</h2>
+        <button class="mode-btn" id="play-mode" type="button" aria-label="切换播放模式">单曲播放</button>
       </div>
       <div class="tabs" role="tablist">
         <button class="tab active" data-book="pathology" type="button">
@@ -449,7 +512,7 @@
   </div>
 
   <div class="player">
-    <div>
+    <div class="now">
       <div class="now-label">正在收听</div>
       <div class="now-title is-idle" id="now-title">选择一节开始播放</div>
     </div>
@@ -485,8 +548,34 @@
 
     const player = document.getElementById("player");
     const nowTitle = document.getElementById("now-title");
+    const modeBtn = document.getElementById("play-mode");
+    const PLAY_MODES = [
+      { id: "once", label: "单曲播放" },
+      { id: "loop", label: "单曲循环" },
+      { id: "seq", label: "顺序播放" }
+    ];
+    let playMode = "once";
     let activeBook = "pathology";
     let current = { book: null, index: -1 };
+
+    function applyPlayMode() {
+      player.loop = playMode === "loop";
+      const mode = PLAY_MODES.find((item) => item.id === playMode);
+      modeBtn.textContent = mode.label;
+    }
+
+    function cyclePlayMode() {
+      const index = PLAY_MODES.findIndex((item) => item.id === playMode);
+      playMode = PLAY_MODES[(index + 1) % PLAY_MODES.length].id;
+      applyPlayMode();
+    }
+
+    function setTrackProgress(percent) {
+      document.querySelectorAll(".track").forEach((el) => {
+        const active = current.book === el.dataset.book && current.index === Number(el.dataset.index);
+        el.style.setProperty("--progress", active ? `${percent}%` : "0%");
+      });
+    }
 
     function displayTitle(filename) {
       return filename
@@ -549,6 +638,8 @@
       current = { book, index };
       nowTitle.textContent = displayTitle(file);
       nowTitle.classList.remove("is-idle");
+      nowTitle.title = displayTitle(file);
+      setTrackProgress(0);
       player.src = audioUrl(book, file);
       player.play();
       updatePlayingState();
@@ -563,6 +654,9 @@
       document.getElementById("list-talks").classList.toggle("hidden", book !== "talks");
     }
 
+    modeBtn.addEventListener("click", cyclePlayMode);
+    applyPlayMode();
+
     document.querySelector(".tabs").addEventListener("click", (event) => {
       const tab = event.target.closest(".tab");
       if (tab) switchTab(tab.dataset.book);
@@ -576,13 +670,21 @@
 
     player.addEventListener("play", updatePlayingState);
     player.addEventListener("pause", updatePlayingState);
+    player.addEventListener("timeupdate", () => {
+      if (!player.duration) return;
+      setTrackProgress((player.currentTime / player.duration) * 100);
+    });
     player.addEventListener("ended", () => {
-      const next = current.index + 1;
-      if (current.book && next < BOOKS[current.book].files.length) {
-        playTrack(current.book, next);
-      } else {
-        updatePlayingState();
+      if (playMode === "loop") return;
+      if (playMode === "seq" && current.book) {
+        const next = current.index + 1;
+        if (next < BOOKS[current.book].files.length) {
+          playTrack(current.book, next);
+          return;
+        }
       }
+      setTrackProgress(100);
+      updatePlayingState();
     });
 
     renderPdfs();
